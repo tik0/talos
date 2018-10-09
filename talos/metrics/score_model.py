@@ -2,15 +2,18 @@ from .performance import Performance
 from numpy import nan
 
 
-# Inspired by predict_classes function from Keras Sequential Model
-# Supports Functional Model (Experimental)
 def _functional_predict(model, x, batch_size=32, verbose=0):
 
-        proba = model.predict(x, batch_size=batch_size, verbose=verbose)
-        if proba.shape[-1] > 1:
-            return proba.argmax(axis=-1)
-        else:
-            return (proba > 0.5).astype('int32')
+    '''Supports functional model class from Keras'''
+
+    proba = model.predict(x,
+                          batch_size=batch_size,
+                          verbose=verbose)
+
+    if proba.shape[-1] > 1:
+        return proba.argmax(axis=-1)
+    else:
+        return (proba > 0.5).astype('int32')
 
 
 def get_score(self):
@@ -28,7 +31,7 @@ def get_score(self):
 
     try:
         # for functional model experimental support
-        if self.experimental_functional_support:
+        if self.functional_model:
             y_pred = _functional_predict(self.keras_model, self.x_val)
         # all other cases
         else:

@@ -16,7 +16,7 @@ MAINTAINER_EMAIL = 'mailme@mikkokotila.com'
 URL = 'http://autonom.io'
 LICENSE = 'MIT'
 DOWNLOAD_URL = 'https://github.com/autonomio/talos/'
-VERSION = '0.3.2'
+VERSION = '0.4.4'
 
 try:
     from setuptools import setup
@@ -57,6 +57,18 @@ def check_dependencies():
         import tqdm
     except ImportError:
         install_requires.append('tqdm')
+    try:
+        import chances
+    except ImportError:
+        install_requires.append('chances')
+    try:
+        import kerasplotlib
+    except ImportError:
+        install_requires.append('kerasplotlib')
+    try:
+        import wrangle
+    except ImportError:
+        install_requires.append('wrangle')
 
     return install_requires
 
@@ -85,12 +97,7 @@ if __name__ == "__main__":
                     'talos.parameters',
                     'talos.reducers',
                     'talos.metrics',
-                    'talos.samplers',
-                    'talos.samplers.lhs_sudoku',
-                    'talos.samplers.hypercube',
-                    'talos.samplers.sobol',
-                    'talos.samplers.quantum',
-                    'talos.samplers.ambient'],
+                    'talos.commands'],
 
           classifiers=[
                  'Intended Audience :: Science/Research',
