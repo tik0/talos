@@ -63,7 +63,7 @@ def run_round_results(self, out):
     for key in self.round_params.keys():
         _rr_out.append(self.round_params[key])
 
-    return ",".join(str(i) for i in _rr_out)
+    return _rr_out
 
 
 def save_result(self):
@@ -78,9 +78,7 @@ def save_result(self):
 def result_todf(self):
     '''ADDS A DATAFRAME VERSION OF THE RESULTS TO THE CLASS OBJECT'''
 
-    self.result = DataFrame(self.result)
-    self.result.columns = self.result.iloc[0]
-    self.result = self.result.drop(0)
+    self.result = DataFrame(self.result[1:], columns=self.result[0].split(','))
 
     return self
 
