@@ -27,9 +27,8 @@ def scan_finish(self):
     self.peak_epochs_df['acc_epoch'] = [i[0] for i in self.epoch_entropy]
     self.peak_epochs_df['loss_epoch'] = [i[1] for i in self.epoch_entropy]
 
-    # clean the results into a dataframe
-    self.data = self.result[self.result.columns[0]].str.split(',', expand=True)
-    self.data.columns = self.result.columns[0].split(',')
+    # Just take the results which are already a DataFrame
+    self.data = self.result
 
     # remove redundant columns
     keys = list(self.__dict__.keys())
@@ -67,8 +66,5 @@ def scan_finish(self):
 
     # reset the index
     self.data.index = range(len(self.data))
-
-    # convert to numeric
-    self.data = string_cols_to_numeric(self.data)
 
     return self

@@ -50,7 +50,7 @@ def scan_prepare(self):
         self.param_reference[col] = i
 
     self.round_counter = 0
-    self.peak_epochs = []
+    self.peak_epochs = {}
     self.epoch_entropy = []
     self.round_models = []
 
