@@ -41,24 +41,25 @@ def run_round_results(self, out):
     for key in out.history.keys():
         t_t = array(out.history[key])
 
-        # this handles metrics (NOTE: 'acc' have to be in metric name)
-        if 'acc' in key:
-            best_epoch = argpartition(t_t, len(t_t) - 1)[-1]
-
-        # this handles losses (takes minimum value epoch)
-        else:
-            best_epoch = argpartition(t_t, 0)[0]
-
         if self.last_epoch_value:
             value_to_report = out.history[key][-1]
         else:
+            # this handles metrics (NOTE: 'acc' have to be in metric name)
+            if 'acc' in key:
+                best_epoch = argpartition(t_t, len(t_t) - 1)[-1]
+
+            # this handles losses (takes minimum value epoch)
+            else:
+                best_epoch = argpartition(t_t, 0)[0]
+
             value_to_report = array(out.history[key])[best_epoch]
+            p_epochs.append(best_epoch)
 
         _rr_out.append(value_to_report)
-        p_epochs.append(best_epoch)
 
-        # this takes care of the separate entity with just peak epoch data
-    self.peak_epochs.append(p_epochs)
+    # this takes care of the separate entity with just peak epoch data
+    if p_epochs:
+        self.peak_epochs.append(p_epochs)
 
     for key in self.round_params.keys():
         _rr_out.append(self.round_params[key])
